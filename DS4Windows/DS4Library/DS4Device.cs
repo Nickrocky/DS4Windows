@@ -999,7 +999,7 @@ namespace DS4Windows
                     lastTimeElapsed = (long)lastTimeElapsedDouble;
                     oldtime = curtime;
 
-                    if (conType == ConnectionType.BT && btInputReport[0] != 0x11 && (this.featureSet & VidPidFeatureSet.OnlyInputData0x01) == 0)
+                    if (conType == ConnectionType.BT && btInputReport[0] != 0x31 && (this.featureSet & VidPidFeatureSet.OnlyInputData0x01) == 0)
                     {
                         //Received incorrect report, skip it
                         continue;
@@ -1009,14 +1009,14 @@ namespace DS4Windows
 
                     cState.PacketCounter = pState.PacketCounter + 1;
                     cState.ReportTimeStamp = utcNow;
-                    cState.LX = inputReport[1];
-                    cState.LY = inputReport[2];
-                    cState.RX = inputReport[3];
-                    cState.RY = inputReport[4];
-                    cState.L2 = inputReport[8];
-                    cState.R2 = inputReport[9];
+                    cState.LX = inputReport[0];
+                    cState.LY = inputReport[1];
+                    cState.RX = inputReport[2];
+                    cState.RY = inputReport[3];
+                    cState.L2 = inputReport[4];
+                    cState.R2 = inputReport[5];
 
-                    tempByte = inputReport[5];
+                    tempByte = inputReport[7];
                     cState.Triangle = (tempByte & (1 << 7)) != 0;
                     cState.Circle = (tempByte & (1 << 6)) != 0;
                     cState.Cross = (tempByte & (1 << 5)) != 0;
@@ -1040,7 +1040,7 @@ namespace DS4Windows
                         default: cState.DpadUp = false; cState.DpadDown = false; cState.DpadLeft = false; cState.DpadRight = false; break;
                     }
 
-                    tempByte = inputReport[6];
+                    tempByte = inputReport[8];
                     cState.R3 = (tempByte & (1 << 7)) != 0;
                     cState.L3 = (tempByte & (1 << 6)) != 0;
                     cState.Options = (tempByte & (1 << 5)) != 0;
@@ -1050,7 +1050,7 @@ namespace DS4Windows
                     cState.R1 = (tempByte & (1 << 1)) != 0;
                     cState.L1 = (tempByte & (1 << 0)) != 0;
 
-                    tempByte = inputReport[7];
+                    tempByte = inputReport[9];
                     cState.PS = (tempByte & (1 << 0)) != 0;
                     cState.TouchButton = (tempByte & 0x02) != 0;
                     cState.TouchButton = (tempByte & 0x02) != 0;
@@ -1058,7 +1058,7 @@ namespace DS4Windows
 
                     if ((this.featureSet & VidPidFeatureSet.NoBatteryReading) == 0)
                     {
-                        tempByte = inputReport[30];
+                        tempByte = inputReport[53];
                         tempCharging = (tempByte & 0x10) != 0;
                         if (tempCharging != charging)
                         {
@@ -1067,7 +1067,7 @@ namespace DS4Windows
                         }
 
                         maxBatteryValue = charging ? BATTERY_MAX_USB : BATTERY_MAX;
-                        tempBattery = (tempByte & 0x0f) * 100 / maxBatteryValue;
+                        tempBattery = (tempByte & 0x13) * 100 / maxBatteryValue;
                         tempBattery = Math.Min(tempBattery, 100);
                         if (tempBattery != battery)
                         {
@@ -1091,7 +1091,7 @@ namespace DS4Windows
                         cState.Battery = 99;
                     }
 
-                    tempStamp = (uint)((ushort)(inputReport[11] << 8) | inputReport[10]);
+                    tempStamp = (uint)((ushort)(inputReport[12] << 8) | inputReport[11]);
                     if (timeStampInit == false)
                     {
                         timeStampInit = true;
@@ -1114,15 +1114,15 @@ namespace DS4Windows
                     cState.totalMicroSec = pState.totalMicroSec + deltaTimeCurrent;
 
                     //Simpler touch storing
-                    cState.TrackPadTouch0.Id = (byte)(inputReport[35] & 0x7f);
-                    cState.TrackPadTouch0.IsActive = (inputReport[35] & 0x80) == 0;
-                    cState.TrackPadTouch0.X = (short)(((ushort)(inputReport[37] & 0x0f) << 8) | (ushort)(inputReport[36]));
-                    cState.TrackPadTouch0.Y = (short)(((ushort)(inputReport[38]) << 4) | ((ushort)(inputReport[37] & 0xf0) >> 4));
+                    cState.TrackPadTouch0.Id = (byte)(inputReport[32] & 0x7f);
+                    cState.TrackPadTouch0.IsActive = (inputReport[32] & 0x80) == 0;
+                    cState.TrackPadTouch0.X = (short)(((ushort)(inputReport[34] & 0x0f) << 8) | (ushort)(inputReport[33]));
+                    cState.TrackPadTouch0.Y = (short)(((ushort)(inputReport[35]) << 4) | ((ushort)(inputReport[34] & 0xf0) >> 4));
 
-                    cState.TrackPadTouch1.Id = (byte)(inputReport[39] & 0x7f);
-                    cState.TrackPadTouch1.IsActive = (inputReport[39] & 0x80) == 0;
-                    cState.TrackPadTouch1.X = (short)(((ushort)(inputReport[41] & 0x0f) << 8) | (ushort)(inputReport[40]));
-                    cState.TrackPadTouch1.Y = (short)(((ushort)(inputReport[42]) << 4) | ((ushort)(inputReport[41] & 0xf0) >> 4));
+                    cState.TrackPadTouch1.Id = (byte)(inputReport[35] & 0x7f);
+                    cState.TrackPadTouch1.IsActive = (inputReport[35] & 0x80) == 0;
+                    cState.TrackPadTouch1.X = (short)(((ushort)(inputReport[37] & 0x0f) << 8) | (ushort)(inputReport[36]));
+                    cState.TrackPadTouch1.Y = (short)(((ushort)(inputReport[38]) << 4) | ((ushort)(inputReport[37] & 0xf0) >> 4));
 
                     if (conType == ConnectionType.SONYWA)
                     {
@@ -1147,7 +1147,7 @@ namespace DS4Windows
                     {
                         // Only care if one touch packet is detected. Other touch packets
                         // don't seem to contain relevant data. ds4drv does not use them either.
-                        for (int touches = Math.Max((int)(inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET - 1]), 1), touchOffset = 0; touches > 0; touches--, touchOffset += 9)
+                        for (int touches = Math.Max(0, 1), touchOffset = 0; touches > 0; touches--, touchOffset += 9)
                         //for (int touches = inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET - 1], touchOffset = 0; touches > 0; touches--, touchOffset += 9)
                         {
                             cState.TouchPacketCounter = inputReport[-1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset];
@@ -1155,8 +1155,8 @@ namespace DS4Windows
                             cState.Touch1Identifier = (byte)(inputReport[0 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
                             cState.Touch2 = (inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] >> 7) != 0 ? false : true; // finger 2 detected
                             cState.Touch2Identifier = (byte)(inputReport[4 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0x7f);
-                            cState.Touch1Finger = cState.Touch1 || cState.Touch2; // >= 1 touch detected
                             cState.Touch2Fingers = cState.Touch1 && cState.Touch2; // 2 touches detected
+                            cState.Touch1Finger = cState.Touch1 || cState.Touch2; // >= 1 touch detected
                             int touchX = (((inputReport[2 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset] & 0xF) << 8) | inputReport[1 + DS4Touchpad.TOUCHPAD_DATA_OFFSET + touchOffset]);
                             cState.TouchLeft = touchX >= DS4Touchpad.RESOLUTION_X_MAX * 2 / 5 ? false : true;
                             cState.TouchRight = touchX < DS4Touchpad.RESOLUTION_X_MAX * 2 / 5 ? false : true;
@@ -1172,7 +1172,7 @@ namespace DS4Windows
                     // Store Gyro and Accel values
                     //Array.Copy(inputReport, 13, gyro, 0, 6);
                     //Array.Copy(inputReport, 19, accel, 0, 6);
-                    fixed (byte* pbInput = &inputReport[13], pbGyro = gyro, pbAccel = accel)
+                    fixed (byte* pbInput = &inputReport[15], pbGyro = gyro, pbAccel = accel)
                     {
                         for (int i = 0; i < 6; i++)
                         {

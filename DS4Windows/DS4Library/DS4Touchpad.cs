@@ -63,7 +63,7 @@ namespace DS4Windows
         public event TouchHandler<EventArgs> PreTouchProcess = null; // used to publish that a touch packet is about to be processed
         //public event EventHandler<EventArgs> PreTouchProcess = null; // used to publish that a touch packet is about to be processed
 
-        public readonly static int TOUCHPAD_DATA_OFFSET = 35;
+        public readonly static int TOUCHPAD_DATA_OFFSET = 32;
         public const int RESOLUTION_X_MAX = 1920;
         public const int RESOLUTION_Y_MAX = 900;
         public const int RES_HALFED_X = (int)(RESOLUTION_X_MAX * 0.5);
