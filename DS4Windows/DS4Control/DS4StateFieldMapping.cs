@@ -5,7 +5,7 @@ namespace DS4Windows
     {
         public enum ControlType: int { Unknown = 0, Button, AxisDir, Trigger, Touch, GyroDir, SwipeDir }
 
-        public bool[] buttons = new bool[(int)DS4Controls.SwipeDown + 1];
+        public bool[] buttons = new bool[(int)DS4Controls.Mute + 1];
         public byte[] axisdirs = new byte[(int)DS4Controls.SwipeDown + 1];
         public byte[] triggers = new byte[(int)DS4Controls.SwipeDown + 1];
         public int[] gryodirs = new int[(int)DS4Controls.SwipeDown + 1];
@@ -13,7 +13,7 @@ namespace DS4Windows
         public bool[] swipedirbools = new bool[(int)DS4Controls.SwipeDown + 1];
         public bool touchButton = false;
 
-        public static ControlType[] mappedType = new ControlType[38] { ControlType.Unknown, // DS4Controls.None
+        public static ControlType[] mappedType = new ControlType[39] { ControlType.Unknown, // DS4Controls.None
             ControlType.AxisDir, // DS4Controls.LXNeg
             ControlType.AxisDir, // DS4Controls.LXPos
             ControlType.AxisDir, // DS4Controls.LYNeg
@@ -51,6 +51,7 @@ namespace DS4Windows
             ControlType.SwipeDir, // DS4Controls.SwipeRight
             ControlType.SwipeDir, // DS4Controls.SwipeUp
             ControlType.SwipeDir, // DS4Controls.SwipeDown
+            ControlType.Button // DS4Controls.Mute
         };
 
         public DS4StateFieldMapping()
@@ -89,6 +90,7 @@ namespace DS4Windows
                 buttons[(int)DS4Controls.Circle] = cState.Circle;
                 buttons[(int)DS4Controls.Square] = cState.Square;
                 buttons[(int)DS4Controls.PS] = cState.PS;
+                buttons[(int)DS4Controls.Mute] = cState.Mute;
                 buttons[(int)DS4Controls.Options] = cState.Options;
                 buttons[(int)DS4Controls.Share] = cState.Share;
 
@@ -149,6 +151,7 @@ namespace DS4Windows
                 state.Triangle = buttons[(int)DS4Controls.Triangle];
                 state.Circle = buttons[(int)DS4Controls.Circle];
                 state.Square = buttons[(int)DS4Controls.Square];
+                state.Mute = buttons[(int)DS4Controls.Mute];
                 state.PS = buttons[(int)DS4Controls.PS];
                 state.Options = buttons[(int)DS4Controls.Options];
                 state.Share = buttons[(int)DS4Controls.Share];

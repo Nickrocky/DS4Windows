@@ -251,7 +251,7 @@ namespace DS4Windows
 
         //mapcustom
         public static bool[] pressedonce = new bool[261], macrodone = new bool[38];
-        static bool[] macroControl = new bool[25];
+        static bool[] macroControl = new bool[26];
         static uint macroCount = 0;
         static Dictionary<string, Task>[] macroTaskQueue = new Dictionary<string, Task>[Global.MAX_DS4_CONTROLLER_COUNT] { new Dictionary<string, Task>(), new Dictionary<string, Task>(), new Dictionary<string, Task>(), new Dictionary<string, Task>(), new Dictionary<string, Task>(), new Dictionary<string, Task>(), new Dictionary<string, Task>(), new Dictionary<string, Task>() };
 
@@ -268,14 +268,14 @@ namespace DS4Windows
         public static DateTime[] oldnowKeyAct = new DateTime[Global.MAX_DS4_CONTROLLER_COUNT] { DateTime.MinValue,
             DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue };
 
-        private static DS4Controls[] shiftTriggerMapping = new DS4Controls[26] { DS4Controls.None, DS4Controls.Cross, DS4Controls.Circle, DS4Controls.Square,
+        private static DS4Controls[] shiftTriggerMapping = new DS4Controls[27] { DS4Controls.None, DS4Controls.Cross, DS4Controls.Circle, DS4Controls.Square,
             DS4Controls.Triangle, DS4Controls.Options, DS4Controls.Share, DS4Controls.DpadUp, DS4Controls.DpadDown,
             DS4Controls.DpadLeft, DS4Controls.DpadRight, DS4Controls.PS, DS4Controls.L1, DS4Controls.R1, DS4Controls.L2,
             DS4Controls.R2, DS4Controls.L3, DS4Controls.R3, DS4Controls.TouchLeft, DS4Controls.TouchUpper, DS4Controls.TouchMulti,
-            DS4Controls.TouchRight, DS4Controls.GyroZNeg, DS4Controls.GyroZPos, DS4Controls.GyroXPos, DS4Controls.GyroXNeg,
+            DS4Controls.TouchRight, DS4Controls.GyroZNeg, DS4Controls.GyroZPos, DS4Controls.GyroXPos, DS4Controls.GyroXNeg, DS4Controls.Mute
         };
 
-        private static int[] ds4ControlMapping = new int[38] { 0, // DS4Control.None
+        private static int[] ds4ControlMapping = new int[39] { 0, // DS4Control.None
             16, // DS4Controls.LXNeg
             20, // DS4Controls.LXPos
             17, // DS4Controls.LYNeg
@@ -312,7 +312,8 @@ namespace DS4Windows
             34, // DS4Controls.SwipeLeft
             35, // DS4Controls.SwipeRight
             36, // DS4Controls.SwipeUp
-            37  // DS4Controls.SwipeDown
+            37, // DS4Controls.SwipeDown
+            38 // DS4Controls.Mute
         };
 
         // Define here to save some time processing.
@@ -1772,6 +1773,7 @@ namespace DS4Windows
                 if (macroControl[22]) MappedState.RX = 0;
                 if (macroControl[23]) MappedState.RY = 255;
                 if (macroControl[24]) MappedState.RY = 0;
+                if (macroControl[25]) MappedState.Mute = true;
             }
 
             if (GetSASteeringWheelEmulationAxis(device) != SASteeringWheelEmulationAxisType.None)
@@ -3741,6 +3743,7 @@ namespace DS4Windows
                     case DS4Controls.Share: result = (byte)(cState.Share ? 255 : 0); break;
                     case DS4Controls.Options: result = (byte)(cState.Options ? 255 : 0); break;
                     case DS4Controls.PS: result = (byte)(cState.PS ? 255 : 0); break;
+                    case DS4Controls.Mute: result = (byte)(cState.Mute ? 255 : 0); break;
                     default: break;
                 }
             }
@@ -3843,6 +3846,7 @@ namespace DS4Windows
                 switch (control)
                 {
                     case DS4Controls.PS: result = cState.PS; break;
+                    case DS4Controls.Mute: result = cState.Mute; break;
                     case DS4Controls.Share: result = cState.Share; break;
                     case DS4Controls.Options: result = cState.Options; break;
                     default: break;
@@ -3917,7 +3921,7 @@ namespace DS4Windows
             DS4StateFieldMapping.ControlType controlType = DS4StateFieldMapping.mappedType[controlNum];
             if (controlType == DS4StateFieldMapping.ControlType.Button)
             {
-                result = fieldMap.buttons[controlNum];
+                 result = fieldMap.buttons[controlNum];
             }
             else if (controlType == DS4StateFieldMapping.ControlType.AxisDir)
             {
@@ -4323,6 +4327,7 @@ namespace DS4Windows
                     case DS4Controls.Share: result = (byte)(cState.Share ? trueVal : falseVal); break;
                     case DS4Controls.Options: result = (byte)(cState.Options ? trueVal : falseVal); break;
                     case DS4Controls.PS: result = (byte)(cState.PS ? trueVal : falseVal); break;
+                    case DS4Controls.Mute: result = (byte)(cState.Mute ? trueVal : falseVal); break;
                     default: break;
                 }
             }

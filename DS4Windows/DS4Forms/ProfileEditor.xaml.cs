@@ -1201,6 +1201,7 @@ namespace DS4WinWPF.DS4Forms
                     case DS4Controls.RYPos: index = 26; break;
                     case DS4Controls.RXNeg: index = 27; break;
                     case DS4Controls.RXPos: index = 28; break;
+                    case DS4Controls.Mute: index = 29; break;
                     default: break;
                 }
 

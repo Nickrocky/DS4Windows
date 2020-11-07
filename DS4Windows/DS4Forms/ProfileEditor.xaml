@@ -1062,6 +1062,7 @@
                                         <MenuItem Header="PS" IsCheckable="True" Click="GyroMouseTrigMenuItem_Click" />
                                         <MenuItem Header="Touchpad Click" IsCheckable="True" Click="GyroMouseTrigMenuItem_Click" />
                                         <MenuItem Header="Always On" IsCheckable="True" Click="GyroMouseTrigMenuItem_Click" />
+                                        <MenuItem Header="Mute" IsCheckable="True" Click="GyroMouseTrigMenuItem_Click" />
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>
@@ -1177,6 +1178,7 @@
                                         <MenuItem Header="PS" IsCheckable="True" Click="GyroMouseStickTrigMenuItem_Click" />
                                         <MenuItem Header="Touchpad Click" IsCheckable="True" Click="GyroMouseStickTrigMenuItem_Click" />
                                         <MenuItem Header="Always On" IsCheckable="True" Click="GyroMouseStickTrigMenuItem_Click" />
+                                        <MenuItem Header="Mute" IsCheckable="True" Click="GyroMouseStickTrigMenuItem_Click" />
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>

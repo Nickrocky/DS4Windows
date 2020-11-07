@@ -30,6 +30,7 @@ namespace DS4Windows
         bool Share { get { return _state.Share; } }
         bool Options { get { return _state.Options; } }
         bool PS { get { return _state.PS; } }
+        bool Mute { get { return _state.Mute; } }
         bool Touch1 { get { return _state.Touch1; } }
         bool Touch2 { get { return _state.Touch2; } }
         bool TouchButton { get { return _state.TouchButton; } }

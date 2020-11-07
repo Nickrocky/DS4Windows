@@ -1054,6 +1054,7 @@ namespace DS4Windows
                     cState.PS = (tempByte & (1 << 0)) != 0;
                     cState.TouchButton = (tempByte & 0x02) != 0;
                     cState.TouchButton = (tempByte & 0x02) != 0;
+                    cState.Mute = (tempByte & 0x04) != 0;
                     cState.FrameCounter = (byte)(tempByte >> 2);
 
                     if ((this.featureSet & VidPidFeatureSet.NoBatteryReading) == 0)
@@ -1663,7 +1664,7 @@ namespace DS4Windows
                 return false;
             if (cState.DpadUp || cState.DpadLeft || cState.DpadDown || cState.DpadRight)
                 return false;
-            if (cState.L3 || cState.R3 || cState.L1 || cState.R1 || cState.Share || cState.Options || cState.PS)
+            if (cState.L3 || cState.R3 || cState.L1 || cState.R1 || cState.Share || cState.Options || cState.PS || cState.Mute)
                 return false;
             if (cState.L2 != 0 || cState.R2 != 0)
                 return false;

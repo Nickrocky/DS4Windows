@@ -75,6 +75,8 @@ namespace DS4WinWPF.DS4Forms.ViewModels
             mappings.Add(new MappedControl(devIndex, DS4Controls.SwipeLeft, "Swipe Left", devType));
             mappings.Add(new MappedControl(devIndex, DS4Controls.SwipeRight, "Swipe Right", devType));
 
+            mappings.Add(new MappedControl(devIndex, DS4Controls.Mute, "Mute", devType));
+
             foreach (MappedControl mapped in mappings)
             {
                 controlMap.Add(mapped.Control, mapped);
@@ -248,6 +250,7 @@ namespace DS4WinWPF.DS4Forms.ViewModels
                 case 24: return Properties.Resources.TiltLeft;
                 case 25: return Properties.Resources.TiltRight;
                 case 26: return "Finger on Touchpad";
+                case 27: return "Mute";
                 default: return "";
             }
         }

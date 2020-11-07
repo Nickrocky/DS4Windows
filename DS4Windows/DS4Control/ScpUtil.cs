@@ -20,8 +20,9 @@ namespace DS4Windows
     [Flags]
     public enum DS4KeyType : byte { None = 0, ScanCode = 1, Toggle = 2, Unbound = 4, Macro = 8, HoldMacro = 16, RepeatMacro = 32 }; // Increment by exponents of 2*, starting at 2^0
     public enum Ds3PadId : byte { None = 0xFF, One = 0x00, Two = 0x01, Three = 0x02, Four = 0x03, All = 0x04 };
-    public enum DS4Controls : byte { None, LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, L1, L2, L3, R1, R2, R3, Square, Triangle, Circle, Cross, DpadUp, DpadRight, DpadDown, DpadLeft, PS, TouchLeft, TouchUpper, TouchMulti, TouchRight, Share, Options, GyroXPos, GyroXNeg, GyroZPos, GyroZNeg, SwipeLeft, SwipeRight, SwipeUp, SwipeDown };
+    public enum DS4Controls : byte { None, LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, L1, L2, L3, R1, R2, R3, Square, Triangle, Circle, Cross, DpadUp, DpadRight, DpadDown, DpadLeft, PS, TouchLeft, TouchUpper, TouchMulti, TouchRight, Share, Options, GyroXPos, GyroXNeg, GyroZPos, GyroZNeg, SwipeLeft, SwipeRight, SwipeUp, SwipeDown, Mute};
     public enum X360Controls : byte { None, LXNeg, LXPos, LYNeg, LYPos, RXNeg, RXPos, RYNeg, RYPos, LB, LT, LS, RB, RT, RS, X, Y, B, A, DpadUp, DpadRight, DpadDown, DpadLeft, Guide, Back, Start, TouchpadClick, LeftMouse, RightMouse, MiddleMouse, FourthMouse, FifthMouse, WUP, WDOWN, MouseUp, MouseDown, MouseLeft, MouseRight, Unbound };
+
 
     public enum SASteeringWheelEmulationAxisType: byte { None = 0, LX, LY, RX, RY, L2R2, VJoy1X, VJoy1Y, VJoy1Z, VJoy2X, VJoy2Y, VJoy2Z };
     public enum OutContType : uint { None = 0, X360, DS4 }
@@ -148,7 +149,7 @@ namespace DS4Windows
             ControlButtons.Add(settingsList[(int)DS4Controls.R1-1]);
             ControlButtons.Add(settingsList[(int)DS4Controls.R3-1]);
 
-            for (int i = (int)DS4Controls.Square; i <= (int)DS4Controls.SwipeDown; i++)
+            for (int i = (int)DS4Controls.Square; i <= (int)DS4Controls.Mute; i++)
             {
                 ControlButtons.Add(settingsList[i-1]);
             }
@@ -388,7 +389,7 @@ namespace DS4Windows
             X360Controls.Y, X360Controls.B, X360Controls.A, X360Controls.DpadUp, X360Controls.DpadRight, X360Controls.DpadDown,
             X360Controls.DpadLeft, X360Controls.Guide, X360Controls.LeftMouse, X360Controls.MiddleMouse, X360Controls.RightMouse, X360Controls.LeftMouse,
             X360Controls.Back, X360Controls.Start, X360Controls.None, X360Controls.None, X360Controls.None, X360Controls.None,
-            X360Controls.None, X360Controls.None, X360Controls.None, X360Controls.None
+            X360Controls.None, X360Controls.None, X360Controls.None, X360Controls.None, X360Controls.None
         };
 
         // Create mapping array at runtime
@@ -531,6 +532,7 @@ namespace DS4Windows
             [DS4Controls.DpadDown] = "Dpad Down",
             [DS4Controls.DpadLeft] = "Dpad Left",
             [DS4Controls.PS] = "PS",
+            [DS4Controls.Mute] = "Mute",
             [DS4Controls.Share] = "Share",
             [DS4Controls.Options] = "Options",
             [DS4Controls.TouchLeft] = "Left Touch",
@@ -561,7 +563,7 @@ namespace DS4Windows
             [DS4Controls.LXNeg] = 279, [DS4Controls.LYPos] = 280,
             [DS4Controls.LYNeg] = 281, [DS4Controls.RXPos] = 282,
             [DS4Controls.RXNeg] = 283, [DS4Controls.RYPos] = 284,
-            [DS4Controls.RYNeg] = 285,
+            [DS4Controls.RYNeg] = 285, [DS4Controls.Mute] = 286
         };
 
         public static Dictionary<TrayIconChoice, string> iconChoiceResources = new Dictionary<TrayIconChoice, string>
@@ -3333,6 +3335,7 @@ namespace DS4Windows
                 case "bnSquare": return DS4Controls.Square;
 
                 case "bnPS": return DS4Controls.PS;
+                case "bnMute": return DS4Controls.Mute;
                 case "bnLSLeft": return DS4Controls.LXNeg;
                 case "bnLSUp": return DS4Controls.LYNeg;
                 case "bnRSLeft": return DS4Controls.RXNeg;
@@ -3377,6 +3380,7 @@ namespace DS4Windows
                 case "sbnSquare": return DS4Controls.Square;
 
                 case "sbnPS": return DS4Controls.PS;
+                case "sbnMute": return DS4Controls.Mute;
                 case "sbnLSLeft": return DS4Controls.LXNeg;
                 case "sbnLSUp": return DS4Controls.LYNeg;
                 case "sbnRSLeft": return DS4Controls.RXNeg;
@@ -3416,6 +3420,7 @@ namespace DS4Windows
                 case "bnShiftSquare": return DS4Controls.Square;
 
                 case "bnShiftPS": return DS4Controls.PS;
+                case "bnShiftMute": return DS4Controls.Mute;
                 case "bnShiftLSLeft": return DS4Controls.LXNeg;
                 case "bnShiftLSUp": return DS4Controls.LYNeg;
                 case "bnShiftRSLeft": return DS4Controls.RXNeg;
@@ -6552,6 +6557,7 @@ namespace DS4Windows
                 case "Square": return DS4Controls.Square;
 
                 case "PS": return DS4Controls.PS;
+                case "Mute": return DS4Controls.Mute;
                 case "Left Stick Left": return DS4Controls.LXNeg;
                 case "Left Stick Up": return DS4Controls.LYNeg;
                 case "Right Stick Left": return DS4Controls.RXNeg;

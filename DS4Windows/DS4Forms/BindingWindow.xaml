@@ -89,6 +89,7 @@
                         <ComboBoxItem Content="Left"/>
                         <ComboBoxItem Content="Right"/>
                         <ComboBoxItem Content="PS"/>
+                        <ComboBoxItem Content="Mute"/>
                         <ComboBoxItem Content="L1"/>
                         <ComboBoxItem Content="R1"/>
                         <ComboBoxItem Content="L2"/>

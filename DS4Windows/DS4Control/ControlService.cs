@@ -1872,6 +1872,8 @@ namespace DS4Windows
                     result = DS4Controls.Options;
                 else if (Mapping.getBoolButtonMapping(cState.PS))
                     result = DS4Controls.PS;
+                else if (Mapping.getBoolButtonMapping(cState.Mute))
+                    result = DS4Controls.Mute;
                 else if (Mapping.getBoolAxisDirMapping(cState.LX, true))
                     result = DS4Controls.LXPos;
                 else if (Mapping.getBoolAxisDirMapping(cState.LX, false))
